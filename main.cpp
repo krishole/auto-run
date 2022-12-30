@@ -59,9 +59,6 @@ int main() {
 			Move(false);
 		}
 
-		nextLine = moving ? "Status: Running " : "Status: Waiting  ";
-
-
 		if (lastLine != nextLine) {
 			if (nextLine.length() < lastLine.length()) {
 				int diff = (int)(lastLine.length() - nextLine.length());
