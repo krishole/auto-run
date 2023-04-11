@@ -4,8 +4,10 @@
 #include <random>
 #include <string>
 
+//https://learn.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-6.0/aa299374(v=vs.60)?redirectedfrom=MSDN
 constexpr auto VSCAN_KEY_W = 0x11;
 constexpr auto VSCAN_KEY_LSHIFT = 0x2A;
+constexpr auto VSCAN_KEY_LCONTROL = 0x1D;
 
 constexpr auto VK_KEY_W = 0x57;
 constexpr auto VK_KEY_G = 0x47;
@@ -31,30 +33,30 @@ static std::string nextLine = "Waiting";
 void Move(bool val) {
 	moving = val;
 	KeyEvent(VSCAN_KEY_W, moving);
-	KeyEvent(VSCAN_KEY_LSHIFT, moving);
+	KeyEvent(VSCAN_KEY_LCONTROL, moving);
 }
 
 int main() {
 	SetConsoleTitleA("Auto Runner");
 	std::cout << "Pills' Auto Runner" << std::endl;
-	std::cout << "Press G to start running." << std::endl;
-	std::cout << "Press G Again or W to stop running." << std::endl;
-	std::cout << "Press CTRL+X to exit." << std::endl << std::endl;
+	std::cout << "Press X to start running." << std::endl;
+	std::cout << "Press X Again or W to stop running." << std::endl;
+	std::cout << "Press SHIFT+X to exit." << std::endl << std::endl;
 
 	bool waitingRelease = false;
 	bool running = true;
 
 	while (running) {
-		if (!waitingRelease && (GetKeyState(VK_KEY_G) & 0x8000)) {
+		if (!waitingRelease && (GetKeyState(VK_KEY_X) & 0x8000)) {
 			waitingRelease = true;
 			Move(!moving);
-		} else if (waitingRelease && !(GetKeyState(VK_KEY_G) & 0x8000)) {
+		} else if (waitingRelease && !(GetKeyState(VK_KEY_X) & 0x8000)) {
 			waitingRelease = false;
 		} else if (moving && !(GetKeyState(VK_KEY_W) & 0x8000)) {
 			Move(false);
 		}
 
-		if ((GetKeyState(VK_LCONTROL) & 0x8000) && (GetKeyState(VK_KEY_X) & 0x8000)) {
+		if ((GetKeyState(VK_LSHIFT) & 0x8000) && (GetKeyState(VK_KEY_X) & 0x8000)) {
 			running = false;
 			Move(false);
 		}
